@@ -1,15 +1,13 @@
 import streamlit as st
 
 # ตั้งชื่อแอป
-st.title("Addition Calculators")
+st.title("Image Uploader")
 
-# สร้างอินพุตให้ผู้ใช้ป้อนตัวเลขสองตัว
-number1 = st.number_input("Enter first number:", value=0)
-number2 = st.number_input("Enter second number:", value=0)
+# อัปโหลดรูปภาพ
+uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
 
-# ปุ่มคำนวณผลบวก
-if st.button("Calculate"):
-    # คำนวณผลลัพธ์
-    result = number1 + number2
-    # แสดงผลลัพธ์
-    st.write("The sum is:", result)
+# ถ้ามีการอัปโหลดรูปภาพ ให้แสดงผล
+if uploaded_file is not None:
+    # แสดงผลรูปภาพที่อัปโหลดโดยตรง
+    st.image(uploaded_file, caption="Uploaded Image.", use_column_width=True)
+    st.write("Image uploaded successfully!")
