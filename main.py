@@ -6,20 +6,10 @@ st.title("Read H5 File and Display Datasets")
 
 # อัปโหลดไฟล์ H5
 
-uploaded_file = st.file_uploader("Choose an H5 file...", type=["h5"])
+file_path = '/content/keras_model.h5'  # เปลี่ยนเป็นชื่อไฟล์ของคุณ
 
-# ถ้ามีการอัปโหลดไฟล์
-if uploaded_file is not None:
-    # เปิดไฟล์ H5
-    with h5py.File(uploaded_file, 'r') as h5_file:
-        # แสดงชื่อของ datasets ในไฟล์
-        st.write("Datasets in the H5 file:")
-        for dataset in h5_file.keys():
-            st.write(dataset)
-
-        # ตัวอย่างการแสดงข้อมูลจาก dataset แรก
-        if h5_file:
-            first_dataset = next(iter(h5_file.keys()))  # ดึงชื่อ dataset แรก
-            data = h5_file[first_dataset][:]
-            st.write(f"Data from dataset '{first_dataset}':")
-            st.write(data)
+with h5py.File(file_path, 'r') as h5_file:
+    # แสดงรายการ datasets ในไฟล์
+    st.write("Datasets in the H5 file:")
+    for dataset in h5_file.keys():
+        st.write(dataset)
