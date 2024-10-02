@@ -1,15 +1,36 @@
 import streamlit as st
+import cv2
+import numpy as np
 
-# ตั้งชื่อแอป
-st.title("Addition Calculator")
+st.title("Real-time Video Stream with Streamlit")
 
-# สร้างอินพุตให้ผู้ใช้ป้อนตัวเลขสองตัว
-number1 = st.number_input("Enter first number:", value=0)
-number2 = st.number_input("Enter second number:", value=0)
+# สร้างพื้นที่สำหรับแสดงผลวิดีโอ
+video_placeholder = st.empty()
 
-# ปุ่มคำนวณผลบวก
-if st.button("Calculate"):
-    # คำนวณผลลัพธ์
-    result = number1 + number2
-    # แสดงผลลัพธ์
-    st.write("The sum is:", result)
+# เปิดกล้องโดยใช้ OpenCV
+cap = cv2.VideoCapture(0)  # 0 หมายถึงกล้องตัวแรกที่เชื่อมต่อ
+
+# ตรวจสอบว่ากล้องถูกเปิดหรือไม่
+if not cap.isOpened():
+    st.write("Error: Could not open video stream.")
+
+else:
+    # วนลูปเพื่ออ่านและแสดงผลเฟรมจากกล้องแบบเรียลไทม์
+    while True:
+        ret, frame = cap.read()
+        if not ret:
+            st.write("Error: Could not read frame from camera.")
+            break
+        
+        # แปลงภาพจาก BGR (ของ OpenCV) เป็น RGB (ที่ Streamlit ใช้)
+        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        
+        # แสดงผลเฟรมใน Streamlit
+        video_placeholder.image(frame, channels="RGB")
+
+        # ถ้าต้องการหยุดแสดงผลให้กดปุ่ม stop
+        if st.button('Stop'):
+            break
+
+# ปิดกล้องหลังจากหยุดการทำงาน
+cap.release()
