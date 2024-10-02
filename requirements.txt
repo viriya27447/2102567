@@ -1,4 +1,4 @@
-streamlit
-h5py
-keras
-PIL
+streamlit==1.25.0
+tensorflow==2.13.0
+pandas==2.0.3
+h5py==3.8.0
