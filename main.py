@@ -6,7 +6,8 @@ st.title("Read H5 File and Display Datasets")
 
 # อัปโหลดไฟล์ H5
 
-uploaded_file = '"D:\keras_model.h5"'
+uploaded_file = st.file_uploader("Choose an H5 file...", type=["h5"])
+
 # ถ้ามีการอัปโหลดไฟล์
 if uploaded_file is not None:
     # เปิดไฟล์ H5
