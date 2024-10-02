@@ -1,7 +1,7 @@
 import streamlit as st
 
 # ตั้งชื่อแอป
-st.title("Addition Calculator")
+st.title("Addition Calculators")
 
 # สร้างอินพุตให้ผู้ใช้ป้อนตัวเลขสองตัว
 number1 = st.number_input("Enter first number:", value=0)
