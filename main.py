@@ -1,14 +1,21 @@
 import streamlit as st
-from zipfile import ZipFile
+import zipfile
+import os
 
 # ตั้งชื่อแอป
-st.title("Image Uploader")
+st.title("ZIP File Reader")
 
-# อัปโหลดรูปภาพ
-uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
+# อัปโหลดไฟล์ ZIP
+uploaded_file = st.file_uploader("Choose a ZIP file...", type=["zip"])
 
-# ถ้ามีการอัปโหลดรูปภาพ ให้แสดงผล
+# ถ้ามีการอัปโหลดไฟล์ ZIP
 if uploaded_file is not None:
-    # แสดงผลรูปภาพที่อัปโหลดโดยตรง
-    st.image(uploaded_file, caption="Uploaded Image.", use_column_width=True)
-    st.write("Image uploaded successfully!")
+    # สร้างชื่อไฟล์ ZIP
+    with zipfile.ZipFile(uploaded_file, 'r') as zip_ref:
+        # แสดงรายชื่อไฟล์ภายใน ZIP
+        file_list = zip_ref.namelist()
+        
+        # แสดงรายชื่อไฟล์
+        st.write("Files in the ZIP:")
+        for file_name in file_list:
+            st.write(file_name)
