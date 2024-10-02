@@ -1,7 +1,11 @@
+from keras.models import load_model  # TensorFlow is required for Keras to work
+from PIL import Image, ImageOps  # Install pillow instead of PIL
+
 import streamlit as st
 import h5py
 import requests
 import io
+import numpy as np
 
 # ตั้งชื่อแอป
 st.title("Read H5 File from URL and Display Datasets")
