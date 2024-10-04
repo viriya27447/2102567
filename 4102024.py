@@ -1,8 +1,14 @@
 import streamlit as st
-from streamlit_webrtc import webrtc_streamer
+from streamlit_webrtc import webrtc_streamer, WebRtcMode, RTCConfiguration
 
-# ตั้งชื่อให้กับแอป
 st.title("Webcam Stream")
 
-# เรียกใช้งาน webrtc_streamer
-webrtc_streamer(key="example")
+# ตรวจสอบการตั้งค่า RTC
+rtc_configuration = RTCConfiguration({"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]})
+
+# เรียกใช้งาน webrtc_streamer พร้อม RTC configuration
+webrtc_streamer(
+    key="example",
+    mode=WebRtcMode.SENDRECV,
+    rtc_configuration=rtc_configuration
+)
