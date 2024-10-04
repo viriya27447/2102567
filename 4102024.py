@@ -1,6 +1,10 @@
 import streamlit as st
-from streamlit_webrtc import webrtc_streamer, WebRtcMode, RTCConfiguration
 
-st.title("Webcam Stream2")
+# ตั้งชื่อแอป
+st.title("Camera Input Example")
 
-st.camera_input(label, key=None, help=None, on_change=None, args=None, kwargs=None, *, disabled=False, label_visibility="visible")
+# ใช้งาน camera_input
+image = st.camera_input("Take a picture")
+
+if image is not None:
+    st.image(image, caption="Captured Image", use_column_width=True)
