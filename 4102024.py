@@ -1,7 +1,7 @@
 import streamlit as st
 from streamlit_webrtc import webrtc_streamer, WebRtcMode, RTCConfiguration
 
-st.title("Webcam Stream")
+st.title("Webcam Stream1")
 
 # ตรวจสอบการตั้งค่า RTC
 rtc_configuration = RTCConfiguration({"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]})
