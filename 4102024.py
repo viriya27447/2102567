@@ -8,3 +8,4 @@ image = st.camera_input("Take a picture")
 
 if image is not None:
     st.image(image, caption="Captured Image", use_column_width=True)
+    st.write(5+5)
