@@ -1,30 +1,18 @@
 # app.py
+
 import streamlit as st
-import pandas as pd
-from viriya import ViriyaModel  # นำเข้าโมเดลจากไฟล์ viriya.py
+from calculator import add_numbers  # นำเข้าฟังก์ชันจากไฟล์ calculator.py
 
-# อินเตอร์เฟส Streamlit
-st.title("Linear Regression Model with Viriya")
+# สร้างส่วนติดต่อผู้ใช้บน Streamlit
+st.title("Simple Addition App")
 
-# อัพโหลดไฟล์ข้อมูล
-uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
+# รับอินพุตตัวเลขสองตัวจากผู้ใช้
+num1 = st.number_input("Enter the first number", value=0)
+num2 = st.number_input("Enter the second number", value=0)
 
-if uploaded_file is not None:
-    # อ่านข้อมูล
-    data = pd.read_csv(uploaded_file)
-    st.write("Data preview", data.head())
-
-    # สร้างอินสแตนซ์ของโมเดล
-    model = ViriyaModel()
-
-    # เทรนโมเดลด้วยข้อมูลที่อัพโหลด
-    model.train(data)
-
-    # รับค่าอินพุตจากผู้ใช้
-    feature1 = st.number_input('Input feature1')
-    feature2 = st.number_input('Input feature2')
-
-    if st.button('Predict'):
-        # ใช้โมเดลทำนายค่า
-        prediction = model.predict([feature1, feature2])
-        st.write(f"Prediction: {prediction[0]}")
+# เมื่อผู้ใช้คลิกปุ่ม "Add"
+if st.button("Add"):
+    # เรียกใช้ฟังก์ชัน add_numbers เพื่อคำนวณผลลัพธ์
+    result = add_numbers(num1, num2)
+    # แสดงผลลัพธ์
+    st.write(f"The result is: {result}")
