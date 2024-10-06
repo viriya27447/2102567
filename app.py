@@ -1,18 +1,47 @@
-# app.py
-
 import streamlit as st
-from calculator import add_numbers  # นำเข้าฟังก์ชันจากไฟล์ calculator.py
+import tensorflow as tf
+from PIL import Image
+import numpy as np
 
-# สร้างส่วนติดต่อผู้ใช้บน Streamlit
-st.title("Simple Addition App")
+# ฟังก์ชันสำหรับโหลดโมเดล
+@st.cache(allow_output_mutation=True)
+def load_model(model_file):
+    model = tf.keras.models.load_model(model_file)
+    return model
 
-# รับอินพุตตัวเลขสองตัวจากผู้ใช้
-num1 = st.number_input("Enter the first number", value=0)
-num2 = st.number_input("Enter the second number", value=0)
+# ฟังก์ชันสำหรับแปลงภาพเป็นรูปแบบที่โมเดลต้องการ
+def preprocess_image(image, target_size):
+    image = image.resize(target_size)
+    image = np.array(image)
+    image = image / 255.0  # Normalize ให้ค่าอยู่ในช่วง 0-1
+    image = np.expand_dims(image, axis=0)  # เพิ่มแกนเพื่อให้มี batch size เป็น 1
+    return image
 
-# เมื่อผู้ใช้คลิกปุ่ม "Add"
-if st.button("Add"):
-    # เรียกใช้ฟังก์ชัน add_numbers เพื่อคำนวณผลลัพธ์
-    result = add_numbers(num1, num2)
-    # แสดงผลลัพธ์
-    st.write(f"The result is: {result}")
+# หัวข้อเว็บ
+st.title("Image Classification with TensorFlow")
+
+# อัปโหลดไฟล์โมเดล
+model_file = st.file_uploader("Upload your Keras model (.h5)", type=["h5"])
+
+if model_file:
+    # โหลดโมเดล
+    model = load_model(model_file)
+    st.success("Model loaded successfully!")
+
+    # อัปโหลดไฟล์รูปภาพ
+    image_file = st.file_uploader("Upload an image for prediction", type=["jpg", "jpeg", "png"])
+
+    if image_file:
+        # แสดงภาพที่อัปโหลด
+        image = Image.open(image_file)
+        st.image(image, caption="Uploaded Image", use_column_width=True)
+
+        # เตรียมข้อมูลสำหรับการทำนาย
+        input_image = preprocess_image(image, target_size=(224, 224))  # เปลี่ยนขนาดภาพตามโมเดลของคุณ
+
+        # ประมวลผลการทำนาย
+        prediction = model.predict(input_image)
+
+        # แสดงผลลัพธ์การทำนาย
+        st.write("Prediction:", prediction)
+        st.write("Predicted class:", np.argmax(prediction))
