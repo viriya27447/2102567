@@ -11,7 +11,7 @@ import numpy as np
 st.title("Read H5 File from URL and Display Datasets")
 
 # URL ของไฟล์ H5
-file_url = 'https://firebasestorage.googleapis.com/v0/b/project-5195649815793865937.appspot.com/o/keras_model.h5?alt=media&token=c75818c8-a1ed-485e-9d57-b934d1743517'  # เปลี่ยนเป็น URL ของไฟล์ H5
+file_url = 'https://firebasestorage.googleapis.com/v0/b/project-5195649815793865937.appspot.com/o/coffee_Model.h5?alt=media&token=719c44f9-4e93-462c-a398-8240b4cc71a3'  # เปลี่ยนเป็น URL ของไฟล์ H5
 
 # ดาวน์โหลดไฟล์ H5
 try:
